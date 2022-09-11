@@ -8,6 +8,6 @@
 
         string Nickname { get; }
 
-        bool MostRecent { get; }
+        string Request { get; }
     }
 }

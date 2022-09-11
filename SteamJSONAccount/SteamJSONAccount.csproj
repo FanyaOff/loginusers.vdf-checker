@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Core\ISteamAccount.cs" />
     <Compile Include="Core\SteamAccount.cs" />
+    <Compile Include="Core\SteamAccountInfo.cs" />
+    <Compile Include="Core\SteamLvlJsonClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

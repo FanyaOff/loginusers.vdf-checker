@@ -1,0 +1,12 @@
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\SteamJSONAccount.exe.config
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\SteamJSONAccount.exe
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\SteamJSONAccount.pdb
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\Gameloop.Vdf.dll
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\Gameloop.Vdf.JsonConverter.dll
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\bin\Release\Newtonsoft.Json.dll
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.csproj.AssemblyReference.cache
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.csproj.SuggestedBindingRedirects.cache
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.csproj.CoreCompileInputs.cache
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.csproj.CopyComplete
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.exe
+C:\Users\Fan9\Desktop\SteamJSONAccount-master\SteamJSONAccount\obj\Release\SteamJSONAccount.pdb
