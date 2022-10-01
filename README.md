@@ -9,7 +9,7 @@ Checker for loginusers.vdf file
 
 * Automatic checking steam level
 
-* Config system
+* Config and log system
 
 * Export accounts to txt
 
