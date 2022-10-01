@@ -24,48 +24,85 @@ namespace SteamJSONAccount
 
         private static void Main(string[] args)
         {
-            // checking api key
-            if (File.Exists("config.ini"))
+           try
             {
-                apiKey = File.ReadLines("config.ini").Skip(1).First();
-                SteamAccountsPath = File.ReadLines("config.ini").Skip(3).First();
-                if (SteamAccountsPath == "default")
-                    SteamAccountsPath = "vdf//loginusers.vdf";
-                else
-                    SteamAccountsPath = $"{File.ReadLines("config.ini").Skip(3).First()}//loginusers.vdf";
-            } 
-            else
-            {
-                FileStream fs = File.Create("config.ini");
-                fs.Close();
-                StreamWriter sw = new StreamWriter("config.ini");
-                sw.WriteLine($"[ApiKey]\nApi key here");
-                sw.WriteLine($"[VdfFolderPath] # leave default to default path\ndefault");
-                sw.Close();
-                Console.WriteLine("Created file with config, fill it out and try again");
-                Console.ReadLine();
-                return;
-            }
+                Log.checkLogFile("loginusers.vdf checker log file");
+                if (!Directory.Exists("vdf"))
+                {
+                    Directory.CreateDirectory("vdf");
+                    Console.WriteLine("Created vdf folder, put loginusers.vdf file and start program");
+                    Log.write("Created vdf folder, put loginusers.vdf file and start program", LogType.INFO, true);
+                    Console.ReadLine();
+                    return;
+                }
+                // checking api key
+                if (File.Exists("config.ini"))
+                {
+                    apiKey = File.ReadLines("config.ini").Skip(1).First();
+                    string cfgPath = File.ReadLines("config.ini").Skip(3).First();
+                    string vdfFileName = File.ReadLines("config.ini").Skip(5).First();
 
-            Console.WriteLine("Sending request to valve servers...");
-            var updateTitleThread = new Thread(() => titleUpdate());
-            updateTitleThread.Start();
-            foreach (SteamAccount item in SteamAccountsUtility.GetAllAccounts())
+                    if (cfgPath == "default" && vdfFileName == "default")
+                        SteamAccountsPath = "vdf//loginusers.vdf";
+                    if (cfgPath == "default" && vdfFileName != "default")
+                        SteamAccountsPath = $"vdf//{vdfFileName}.vdf";
+                    if (cfgPath != "default" && vdfFileName == "default")
+                        SteamAccountsPath = $"{cfgPath}//loginusers.vdf";
+                    if (cfgPath != "default" && vdfFileName != "default")
+                        SteamAccountsPath = $"{cfgPath}//{vdfFileName}.vdf";
+
+                }
+                else
+                {
+                    FileStream fs = File.Create("config.ini");
+                    fs.Close();
+                    using (StreamWriter sw = new StreamWriter("config.ini"))
+                    {
+                        sw.WriteLine($"[ApiKey]\nApi key here");
+                        sw.WriteLine($"[VdfFolderPath] # leave default to default path\ndefault");
+                        sw.WriteLine($"[VdfFileName] # leave default to default name(loginusers)\ndefault");
+                        sw.Close();
+                        Console.WriteLine("Created file with config, fill it out and try again");
+                        Log.write("Created file with config, fill it out and try again", LogType.INFO, true);
+                        Console.ReadLine();
+                        return;
+                    }
+                    
+                }
+                Log.write("Sending request to valve servers...", LogType.INFO, true);
+                Console.WriteLine("Sending request to valve servers...");
+                var updateTitleThread = new Thread(() => titleUpdate());
+                updateTitleThread.Start();
+                foreach (SteamAccount item in SteamAccountsUtility.GetAllAccounts())
+                {
+                    Log.write(item.ToString(), LogType.INFO, true);
+                    Console.WriteLine(item);
+                }
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Log.write("Done! Save file with accounts? Y/N: ", LogType.INFO, true);
+                Console.Write("Done!\nSave file with accounts? Y/N: ");
+                if (Console.ReadLine() == "Y")
+                {
+                    Log.write("User answer: Y", LogType.INFO, true);
+                    Log.write("Creating and writing accounts to txt file", LogType.INFO, true);
+                    File.WriteAllText($"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt", $"----------- loginusers checker by fan9 | Accounts with level -----------\n{String.Join("\n", accounts.ToArray())}\n----------- Accounts without level -----------\n{String.Join("\n", nonLevelAccounts.ToArray())}");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Log.write($"File with accounts has been saved as {DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt", LogType.INFO, true);
+                    Console.WriteLine($"File with accounts has been saved as {DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt");
+                }
+                else
+                {
+                    Console.WriteLine("You select: Don't save file, ok\nDone!");
+                    Log.write("User answer: N, or any answer. Skipping save process ", LogType.INFO, true);
+                }
+
+                updateTitleThread.Abort();
+                Console.ReadLine();
+            } catch (Exception e)
             {
-                Console.WriteLine(item);
+                Log.write(e.ToString(), LogType.ERROR, true);
+                Console.WriteLine("Program is crashed. Check latest.log file. If you have some questions/found bug, open issue on my github - https://github.com/FanyaOff/loginusers.vdf-checker");
             }
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("Done!\nSave file with accounts? Y/N: ");
-            if (Console.ReadLine() == "Y")
-            {
-                File.WriteAllText($"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt", $"----------- loginusers checker by fan9 | Accounts with level -----------\n{String.Join("\n", accounts.ToArray())}\n----------- Accounts without level -----------\n{String.Join("\n", nonLevelAccounts.ToArray())}");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"File with account has been saved\nSaved as {DateTime.Now.ToString("yyyy - MM - dd - HH - mm - ss")}.txt");
-            }
-            else
-                Console.WriteLine("You select: Don't save file, ok\nDone!");
-            updateTitleThread.Abort();
-            Console.ReadLine();
         }
         public static void titleUpdate()
         {
@@ -73,6 +110,8 @@ namespace SteamJSONAccount
                 Console.Title = $"loginusers.vdf checker | Have Lvl: {globalValid} | Don't have Lvl: {globalNotValid}";
         }
     }
+
+
 
     public class SteamAccountsUtility
     {
