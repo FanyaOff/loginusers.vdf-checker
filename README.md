@@ -20,6 +20,7 @@ Checker for loginusers.vdf file
 * Doubling accounts (Fixed)
 
 * Displaying an incorrect log type (Fixed)
+
 If you find more bugs, open the issue and tell us about it
 
 # How to use
