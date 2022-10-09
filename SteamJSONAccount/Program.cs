@@ -75,8 +75,9 @@ namespace SteamJSONAccount
                 updateTitleThread.Start();
                 foreach (SteamAccount item in SteamAccountsUtility.GetAllAccounts())
                 {
-                    Log.write(item.ToString(), LogType.INFO, true);
-                    Console.WriteLine(item);
+                    string account = item.ToString();
+                    Log.write(account, LogType.INFO, true);
+                    Console.WriteLine(account);
                 }
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Log.write("Done! Save file with accounts? Y/N: ", LogType.INFO, true);
