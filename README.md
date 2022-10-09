@@ -15,6 +15,12 @@ Checker for loginusers.vdf file
 
 ![image](https://user-images.githubusercontent.com/73064979/189517512-0bc5dd50-541b-48fe-b6fc-9a832e8137f8.png)
 
+# Bugs and their status
+
+* Doubling accounts (Fixed)
+
+* Displaying an incorrect log type (Fixed)
+If you find more bugs, open the issue and tell us about it
 
 # How to use
 
